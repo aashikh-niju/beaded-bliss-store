@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us | Beaded Bliss</title>
+  <link rel="stylesheet" href="style.css">
+  <meta name="description" content="Get in touch with Beaded Bliss. We'd love to hear from you about our handmade jewelry and accessories." />
+</head>
+<body>
+  <header>
+    <h1>✨ Beaded Bliss ✨</h1>
+    <p>Handcrafted with Love, Worn with Pride</p>
+  </header>
+
+  <nav>
+    <div class="nav-links">
+      <a href="index.html">🏠 Home</a>
+      <a href="bracelets.html">💫 Wrist Whimsy</a>
+      <a href="crochet.html">👜 Knot & Carry</a>
+      <a href="clay.html">🎨 ClayClicks</a>
+      <a href="contact.html">📞 Contact</a>
+    </div>
+    <a href="cart.html" class="cart-icon">
+      <img src="/photos/car.png" alt="Cart">
+      <span class="cart-count" id="cart-count">0</span>
+    </a>
+  </nav>
+
+  <section class="page-title">
+    <h1>📞 Get in Touch</h1>
+  </section>
+
+  <main class="container">
+    <div style="text-align: center; max-width: 600px; margin: 0 auto; padding: var(--space-xl);">
+      <h2 style="color: var(--primary-color); margin-bottom: var(--space-lg);">We'd Love to Hear from You!</h2>
+      <p style="margin-bottom: var(--space-xl); color: var(--text-secondary);">
+        Have questions about our handmade jewelry? Want to place a custom order? 
+        We're here to help make your shopping experience wonderful!
+      </p>
+      
+      <div style="display: flex; flex-direction: column; gap: var(--space-lg);">
+        <div style="background: var(--background-primary); padding: var(--space-lg); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm);">
+          <h3 style="color: var(--primary-color); margin-bottom: var(--space-sm);">📱 WhatsApp</h3>
+          <a href="https://wa.me/918921953078" target="_blank" class="btn" style="text-decoration: none;">
+            +91 8921953078
+          </a>
+        </div>
+        
+        <div style="background: var(--background-primary); padding: var(--space-lg); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm);">
+          <h3 style="color: var(--primary-color); margin-bottom: var(--space-sm);">📧 Email</h3>
+          <a href="mailto:angeljobofficial@gmail.com" class="btn" style="text-decoration: none;">
+            angeljobofficial@gmail.com
+          </a>
+        </div>
+        
+        <div style="background: var(--background-primary); padding: var(--space-lg); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm);">
+          <h3 style="color: var(--primary-color); margin-bottom: var(--space-sm);">📸 Instagram</h3>
+          <a href="https://instagram.com/_angel_j13_" target="_blank" class="btn" style="text-decoration: none;">
+            @_angel_j13_
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Beaded Bliss | Handcrafted with ❤️ </p>
+  </footer>
+
+  <!-- JavaScript for updating cart count -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const cartCount = document.getElementById('cart-count');
+      const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+      const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+      cartCount.textContent = totalItems;
+    });
+  </script>
+</body>
+</html>

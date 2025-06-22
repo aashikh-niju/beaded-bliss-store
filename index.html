@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Beaded Bliss - Handcrafted Jewelry & Accessories</title>
+  <link rel="stylesheet" href="style.css" />
+  <meta name="description" content="Discover unique handmade bracelets, crochet bags, and clay accessories at Beaded Bliss. Each piece is crafted with love and attention to detail." />
+</head>
+<body>
+  <header>
+    <h1>✨ Beaded Bliss ✨</h1>
+    <p>Handcrafted with Love, Worn with Pride</p>
+  </header>
+
+  <nav>
+    <div class="nav-links">
+      <a href="index.html">🏠 Home</a>
+      <a href="bracelets.html">💫 Wrist Whimsy</a>
+      <a href="crochet.html">👜 Knot & Carry</a>
+      <a href="clay.html">🎨 ClayClicks</a>
+      <a href="contact.html">📞 Contact</a>
+    </div>
+    <a href="cart.html" class="cart-icon">
+      <img src="/photos/car.png" alt="Cart">
+      <span class="cart-count" id="cart-count">0</span>
+    </a>
+  </nav>
+
+  <section class="hero-banner">
+    <div class="hero-content">
+      <h2>Discover Handcrafted Wonders</h2>
+      <p>Unique pieces made with love, just for you.</p>
+      <a href="bracelets.html" class="btn btn-primary">Shop All Products</a>
+  </div>
+  </section>
+
+  <div class="container">
+    <div class="category-grid">
+      <div class="category-card">
+        <a href="bracelets.html">
+          <img src="/photos/bracelet2.png" alt="Wrist Whimsy - Handmade Bracelets" />
+          <h3>💫 Wrist Whimsy</h3>
+        </a>
+      </div>
+      <div class="category-card">
+        <a href="crochet.html">
+          <img src="/photos/crochet.png" alt="Knot & Carry - Crochet Bags" />
+          <h3>👜 Knot & Carry</h3>
+        </a>
+      </div>
+      <div class="category-card">
+        <a href="clay.html">
+          <img src="/photos/magnet.png" alt="ClayClicks - Clay Accessories" />
+          <h3>🎨 ClayClicks</h3>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Beaded Bliss | Handcrafted with ❤️ </p>
+  </footer>
+
+  <!-- JavaScript for updating cart count -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const cartCount = document.getElementById('cart-count');
+      const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+      const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+      cartCount.textContent = totalItems;
+    });
+  </script>
+</body>
+</html>

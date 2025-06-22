@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Confirmation | Beaded Bliss</title>
+  <link rel="stylesheet" href="style.css">
+  <meta name="description" content="Thank you for your purchase! Your order has been confirmed and is being processed." />
+</head>
+<body>
+  <header>
+    <h1>✨ Beaded Bliss ✨</h1>
+    <p>Handcrafted with Love, Worn with Pride</p>
+  </header>
+
+  <nav>
+    <div class="nav-links">
+      <a href="index.html">🏠 Home</a>
+      <a href="bracelets.html">💫 Wrist Whimsy</a>
+      <a href="crochet.html">👜 Knot & Carry</a>
+      <a href="clay.html">🎨 ClayClicks</a>
+      <a href="contact.html">📞 Contact</a>
+    </div>
+    <a href="cart.html" class="cart-icon">
+      <img src="/photos/car.png" alt="Cart">
+      <span class="cart-count" id="cart-count">0</span>
+    </a>
+  </nav>
+
+  <section class="page-title">
+    <h1>🎉 Order Confirmed</h1>
+  </section>
+
+  <main class="container">
+    <div style="width: 100%; max-width: 600px; background: var(--background-primary); padding: var(--space-3xl); border-radius: var(--radius-xl); box-shadow: var(--shadow-lg); text-align: center; margin: 0 auto;">
+      <div style="font-size: 4rem; color: var(--success); margin-bottom: var(--space-lg);">✅</div>
+      <h2 style="color: var(--text-primary); margin-bottom: var(--space-lg);">Thank You for Your Purchase!</h2>
+      <p style="color: var(--text-secondary); margin-bottom: var(--space-xl);">Your payment was successful. Here are your order details:</p>
+      
+      <div style="background: var(--background-secondary); padding: var(--space-lg); border-radius: var(--radius-lg); margin-bottom: var(--space-xl);">
+        <p style="margin-bottom: var(--space-sm);"><strong>Payment ID:</strong> <span id="payment-id" style="color: var(--primary-color);"></span></p>
+        <p style="margin-bottom: var(--space-sm);"><strong>Total Amount:</strong> ₹<span id="amount" style="color: var(--primary-color);"></span></p>
+      </div>
+      
+      <p style="color: var(--text-secondary); margin-bottom: var(--space-xl);">Please note your Payment ID for reference. For any queries, contact us via <a href="contact.html" style="color: var(--primary-color);">WhatsApp or Email</a>.</p>
+      <a href="index.html" class="btn">🛍️ Continue Shopping</a>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Beaded Bliss | Handcrafted with ❤️ </p>
+  </footer>
+
+  <script>
+    // Extract payment details from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    document.getElementById('payment-id').textContent = urlParams.get('payment_id') || 'N/A';
+    document.getElementById('amount').textContent = urlParams.get('amount') || '0';
+
+    // Clear cart after successful payment
+    localStorage.removeItem('cart');
+    document.getElementById('cart-count').textContent = '0';
+  </script>
+</body>
+</html>
