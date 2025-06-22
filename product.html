@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Product Details | Beaded Bliss</title>
+  <link rel="stylesheet" href="style.css">
+  <meta name="description" content="View product details and add to your cart. Each piece is handcrafted with love and attention to detail." />
+  <style>
+    .product-page {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: var(--space-xl);
+      background: var(--background-primary);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-lg);
+      text-align: center;
+    }
+    
+    .product-page img {
+      width: 300px;
+      height: 300px;
+      object-fit: cover;
+      border-radius: var(--radius-lg);
+      margin-bottom: var(--space-lg);
+      box-shadow: var(--shadow-md);
+      transition: var(--transition-normal);
+    }
+    
+    .product-page img:hover {
+      transform: scale(1.02);
+    }
+    
+    .product-info {
+      margin-bottom: var(--space-xl);
+    }
+    
+    .product-info h2 {
+      color: var(--text-primary);
+      font-size: 2rem;
+      margin-bottom: var(--space-sm);
+      font-weight: 700;
+    }
+    
+    .product-info p {
+      color: var(--primary-color);
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: var(--space-lg);
+    }
+    
+    .quantity-section {
+      margin: var(--space-lg) 0;
+    }
+    
+    .quantity-section label {
+      display: block;
+      margin-bottom: var(--space-sm);
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+    
+    .quantity-input {
+      width: 80px;
+      padding: var(--space-sm);
+      margin: var(--space-sm);
+      font-size: 1rem;
+      border: 2px solid var(--background-accent);
+      border-radius: var(--radius-md);
+      text-align: center;
+      transition: var(--transition-fast);
+    }
+    
+    .quantity-input:focus {
+      outline: none;
+      border-color: var(--primary-color);
+    }
+    
+    .action-buttons {
+      display: flex;
+      gap: var(--space-md);
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: var(--space-lg);
+    }
+    
+    .btn {
+      margin: 0;
+      min-width: 140px;
+    }
+    
+    .btn-secondary {
+      background: var(--background-accent);
+      color: var(--text-primary);
+    }
+    
+    .btn-secondary:hover {
+      background: var(--text-light);
+      color: white;
+    }
+
+    /* Review Section Styles */
+    .reviews-section {
+      margin-top: var(--space-3xl);
+      padding-top: var(--space-2xl);
+      border-top: 2px solid var(--background-accent);
+    }
+
+    .reviews-header {
+      text-align: center;
+      margin-bottom: var(--space-xl);
+    }
+
+    .reviews-header h3 {
+      font-size: 1.8rem;
+      color: var(--text-primary);
+      margin-bottom: var(--space-sm);
+    }
+
+    .average-rating {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-lg);
+    }
+
+    .average-rating .stars {
+      display: flex;
+      gap: 2px;
+    }
+
+    .average-rating .stars .star {
+      color: var(--secondary-color);
+      font-size: 1.2rem;
+    }
+
+    .average-rating .rating-text {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    /* Review Form */
+    .review-form {
+      background: var(--background-secondary);
+      padding: var(--space-xl);
+      border-radius: var(--radius-lg);
+      margin-bottom: var(--space-xl);
+      text-align: left;
+    }
+
+    .review-form h4 {
+      color: var(--text-primary);
+      margin-bottom: var(--space-lg);
+      font-size: 1.3rem;
+    }
+
+    .form-group {
+      margin-bottom: var(--space-lg);
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: var(--space-sm);
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+
+    .star-rating {
+      display: flex;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-md);
+    }
+
+    .star-rating input[type="radio"] {
+      display: none;
+    }
+
+    .star-rating label {
+      cursor: pointer;
+      font-size: 1.5rem;
+      color: var(--text-light);
+      transition: var(--transition-fast);
+    }
+
+    .star-rating label:hover,
+    .star-rating label:hover ~ label,
+    .star-rating input[type="radio"]:checked ~ label {
+      color: var(--secondary-color);
+    }
+
+    .form-control {
+      width: 100%;
+      padding: var(--space-md);
+      border: 2px solid var(--background-accent);
+      border-radius: var(--radius-md);
+      font-size: 1rem;
+      transition: var(--transition-fast);
+      font-family: inherit;
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--primary-color);
+    }
+
+    textarea.form-control {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .photo-upload {
+      border: 2px dashed var(--background-accent);
+      border-radius: var(--radius-md);
+      padding: var(--space-xl);
+      text-align: center;
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+
+    .photo-upload:hover {
+      border-color: var(--primary-color);
+      background: var(--background-accent);
+    }
+
+    .photo-upload input[type="file"] {
+      display: none;
+    }
+
+    .photo-upload-icon {
+      font-size: 2rem;
+      color: var(--text-light);
+      margin-bottom: var(--space-sm);
+    }
+
+    .photo-preview {
+      margin-top: var(--space-md);
+      display: none;
+    }
+
+    .photo-preview img {
+      max-width: 200px;
+      max-height: 200px;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .submit-review-btn {
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      padding: var(--space-md) var(--space-xl);
+      border-radius: var(--radius-md);
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition-fast);
+      width: 100%;
+    }
+
+    .submit-review-btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+    }
+
+    .submit-review-btn:disabled {
+      background: var(--text-light);
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Reviews List */
+    .reviews-list {
+      margin-top: var(--space-xl);
+    }
+
+    .review-item {
+      background: var(--background-primary);
+      border: 1px solid var(--background-accent);
+      border-radius: var(--radius-lg);
+      padding: var(--space-lg);
+      margin-bottom: var(--space-lg);
+      text-align: left;
+    }
+
+    .review-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: var(--space-md);
+    }
+
+    .reviewer-info {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+
+    .reviewer-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--primary-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .reviewer-name {
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .review-date {
+      color: var(--text-light);
+      font-size: 0.9rem;
+    }
+
+    .review-stars {
+      display: flex;
+      gap: 2px;
+      margin-bottom: var(--space-sm);
+    }
+
+    .review-stars .star {
+      color: var(--secondary-color);
+      font-size: 1rem;
+    }
+
+    .review-text {
+      color: var(--text-primary);
+      line-height: 1.6;
+      margin-bottom: var(--space-md);
+    }
+
+    .review-photo {
+      max-width: 150px;
+      max-height: 150px;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+
+    .review-photo:hover {
+      transform: scale(1.05);
+    }
+
+    .no-reviews {
+      text-align: center;
+      color: var(--text-light);
+      font-style: italic;
+      padding: var(--space-xl);
+    }
+
+    .loading {
+      text-align: center;
+      color: var(--text-secondary);
+      padding: var(--space-xl);
+    }
+
+    /* Photo Modal */
+    .photo-modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(5px);
+    }
+
+    .modal-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      max-width: 90%;
+      max-height: 90%;
+    }
+
+    .modal-content img {
+      width: 100%;
+      height: auto;
+      border-radius: var(--radius-lg);
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      color: white;
+      font-size: 2rem;
+      font-weight: bold;
+      cursor: pointer;
+      z-index: 1001;
+    }
+
+    .close-modal:hover {
+      color: var(--text-light);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>✨ Beaded Bliss ✨</h1>
+    <p>Handcrafted with Love, Worn with Pride</p>
+  </header>
+
+  <nav>
+    <div class="nav-links">
+      <a href="index.html">🏠 Home</a>
+      <a href="bracelets.html">💫 Wrist Whimsy</a>
+      <a href="crochet.html">👜 Knot & Carry</a>
+      <a href="clay.html">🎨 ClayClicks</a>
+      <a href="contact.html">📞 Contact</a>
+    </div>
+    <a href="cart.html" class="cart-icon">
+      <img src="/photos/car.png" alt="Cart">
+      <span class="cart-count" id="cart-count">0</span>
+    </a>
+  </nav>
+
+  <div class="product-page">
+    <img id="product-image" src="" alt="Product">
+    <div class="product-info">
+      <h2 id="product-name"></h2>
+      <p id="product-price"></p>
+    </div>
+
+    <div class="quantity-section">
+      <label for="quantity">Quantity:</label>
+      <input type="number" id="quantity" class="quantity-input" value="1" min="1">
+    </div>
+
+    <div class="action-buttons">
+      <button class="btn" onclick="addToCart()">🛒 Add to Cart</button>
+      <button class="btn btn-secondary" onclick="buyNow()">💳 Buy Now</button>
+    </div>
+
+    <!-- Reviews Section -->
+    <div class="reviews-section">
+      <div class="reviews-header">
+        <h3>🌟 Customer Reviews</h3>
+        <div class="average-rating">
+          <div class="stars" id="average-stars">
+            <span class="star">★</span>
+            <span class="star">★</span>
+            <span class="star">★</span>
+            <span class="star">★</span>
+            <span class="star">★</span>
+          </div>
+          <span class="rating-text" id="average-rating-text">0.0 out of 5</span>
+        </div>
+      </div>
+
+      <!-- Review Form -->
+      <div class="review-form">
+        <h4>Share Your Experience</h4>
+        <form id="review-form">
+          <div class="form-group">
+            <label>Your Rating:</label>
+            <div class="star-rating">
+              <input type="radio" name="rating" value="5" id="star5">
+              <label for="star5">★</label>
+              <input type="radio" name="rating" value="4" id="star4">
+              <label for="star4">★</label>
+              <input type="radio" name="rating" value="3" id="star3">
+              <label for="star3">★</label>
+              <input type="radio" name="rating" value="2" id="star2">
+              <label for="star2">★</label>
+              <input type="radio" name="rating" value="1" id="star1">
+              <label for="star1">★</label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="reviewer-name">Your Name:</label>
+            <input type="text" id="reviewer-name" class="form-control" required>
+          </div>
+
+          <div class="form-group">
+            <label for="review-text">Your Review:</label>
+            <textarea id="review-text" class="form-control" placeholder="Share your experience with this product..." required></textarea>
+          </div>
+
+          <button type="submit" class="submit-review-btn" id="submit-btn">Submit Review</button>
+        </form>
+      </div>
+
+      <!-- Reviews List -->
+      <div class="reviews-list" id="reviews-list">
+        <div class="loading">Loading reviews...</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Photo Modal -->
+  <div class="photo-modal" id="photo-modal">
+    <span class="close-modal" onclick="closeModal()">&times;</span>
+    <div class="modal-content">
+      <img id="modal-image" src="" alt="Review Photo">
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Beaded Bliss | Handcrafted with ❤️ </p>
+  </footer>
+
+  <!-- Stock Manager Script -->
+  <script src="stock-manager.js"></script>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-storage-compat.js"></script>
+
+  <script>
+    // Your Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyAgHThw0E2q9iHTAwvRtV5ng0TpuXn5pT0",
+      authDomain: "handmadestorepayments-a815b.firebaseapp.com",
+      projectId: "handmadestorepayments-a815b",
+      storageBucket: "handmadestorepayments-a815b.appspot.com",
+      messagingSenderId: "415509892322",
+      appId: "1:415509892322:web:b23f2569a96ec27e2362bb"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const storage = firebase.storage();
+
+    // =================================================================
+    // GLOBAL STATE & INITIALIZATION
+    // =================================================================
+    const urlParams = new URLSearchParams(window.location.search);
+    const productName = urlParams.get('name');
+    const productImage = urlParams.get('img');
+    
+    // Function to get product ID from product name
+    function getProductId(productName) {
+      const productNameMap = {
+        'Ocean Bloom': 'ocean-bloom',
+        'Sunset Pearl': 'sunset-pearl',
+        'Moonlight Charm': 'moonlight-charm',
+        'Floral Grace': 'floral-grace',
+        'Midnight Shine': 'midnight-shine',
+        'Azure Dream': 'azure-dream',
+        'Twilight Drops': 'twilight-drops',
+        'Lime Bloom': 'lime-bloom',
+        'Olive Bloom': 'olive-bloom',
+        'Cherry Ember': 'cherry-ember',
+        'AvoBuds': 'avobuds'
+      };
+      return productNameMap[productName] || productName.toLowerCase().replace(/\s+/g, '-');
+    }
+
+    // Function to get product price from localStorage
+    function getProductPrice(productName) {
+      const savedStockData = localStorage.getItem('productStockData');
+      if (!savedStockData) return null;
+
+      const products = JSON.parse(savedStockData);
+      const productId = getProductId(productName);
+      const product = products.find(p => p.id === productId);
+      return product ? product.price : null;
+    }
+    
+    // =================================================================
+    // PAGE LOAD EVENT
+    // =================================================================
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Populate Product Details
+      if (productName && productImage) {
+        const productPrice = getProductPrice(productName);
+        
+        document.getElementById('product-image').src = `/photos/${productImage}`;
+        document.getElementById('product-image').alt = productName;
+        document.getElementById('product-name').textContent = productName;
+        document.getElementById('product-price').textContent = `₹${productPrice || 'N/A'}`;
+        document.title = `${productName} | Beaded Bliss`;
+      } else {
+        document.querySelector('.product-page').innerHTML = '<h2>Product not found</h2><p>Please go back and select a product.</p>';
+      }
+
+      // 2. Update Cart Count in Nav
+      updateNavCartCount();
+      
+      // 3. Check Stock Status
+      updateStockStatus();
+      
+      // 4. Load Product Reviews
+      loadReviews();
+
+      // 5. Setup Form Listener
+      document.getElementById('review-form').addEventListener('submit', (e) => {
+          e.preventDefault();
+          submitReview();
+      });
+    });
+
+    // =================================================================
+    // CORE FUNCTIONS
+    // =================================================================
+
+    function updateNavCartCount() {
+      const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+      const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+      document.getElementById('cart-count').textContent = totalItems;
+    }
+
+    function updateStockStatus() {
+      if (!productName) return;
+      const isInStock = checkStock(productName);
+      const stockQuantity = getStockQuantity(productName);
+      const addToCartBtn = document.querySelector('.btn[onclick="addToCart()"]');
+      const buyNowBtn = document.querySelector('.btn[onclick="buyNow()"]');
+      const quantitySection = document.querySelector('.quantity-section');
+      const productInfo = document.querySelector('.product-info');
+
+      const existingStatus = productInfo.querySelector('.stock-status-display');
+      if (existingStatus) existingStatus.remove();
+
+      const stockStatusDiv = document.createElement('div');
+      stockStatusDiv.className = 'stock-status-display';
+      stockStatusDiv.style.margin = 'var(--space-md) 0';
+
+      if (!isInStock) {
+        stockStatusDiv.innerHTML = `<span class="stock-status out-of-stock" style="padding: 8px 12px; font-size: 1rem;">Out of Stock</span>`;
+        if(addToCartBtn) {
+            addToCartBtn.disabled = true;
+            addToCartBtn.style.opacity = 0.5;
+            addToCartBtn.style.cursor = 'not-allowed';
+        }
+        if(buyNowBtn) {
+            buyNowBtn.disabled = true;
+            buyNowBtn.style.opacity = 0.5;
+            buyNowBtn.style.cursor = 'not-allowed';
+        }
+        if (quantitySection) quantitySection.style.display = 'none';
+
+      } else if (stockQuantity <= 3) {
+        stockStatusDiv.innerHTML = `<span class="stock-status low-stock" style="padding: 8px 12px;">Low Stock: Only ${stockQuantity} left!</span>`;
+      } else {
+        stockStatusDiv.innerHTML = `<span class="stock-status in-stock" style="padding: 8px 12px;">In Stock</span>`;
+      }
+      productInfo.appendChild(stockStatusDiv);
+    }
+
+    function addToCart() {
+      if (!productName || !checkStock(productName)) return;
+      const quantity = parseInt(document.getElementById('quantity').value) || 1;
+      const productPrice = getProductPrice(productName);
+      if (!productPrice) {
+        alert('Product price not available. Please try again.');
+        return;
+      }
+      
+      const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+      const existingItemIndex = cartItems.findIndex(item => item.name === productName);
+
+      if (existingItemIndex > -1) {
+        cartItems[existingItemIndex].quantity += quantity;
+      } else {
+        cartItems.push({ name: productName, price: productPrice, quantity: quantity, image: productImage });
+      }
+      
+      localStorage.setItem('cart', JSON.stringify(cartItems));
+      updateNavCartCount();
+      alert(`${quantity} "${productName}" added to cart!`);
+    }
+
+    function buyNow() {
+      if (!productName || !checkStock(productName)) return;
+      const quantity = parseInt(document.getElementById('quantity').value);
+      const productPrice = getProductPrice(productName);
+      if (!productPrice) {
+        alert('Product price not available. Please try again.');
+        return;
+      }
+      
+      const link = `payment.html?name=${encodeURIComponent(productName)}&price=${productPrice}&quantity=${quantity}&img=${encodeURIComponent(productImage)}`;
+      window.location.href = link;
+    }
+
+    async function submitReview() {
+      const ratingInput = document.querySelector('input[name="rating"]:checked');
+      const reviewerName = document.getElementById('reviewer-name').value.trim();
+      const reviewText = document.getElementById('review-text').value.trim();
+      
+      if (!ratingInput || !reviewerName || !reviewText) {
+        alert('Please fill out all fields and select a rating.');
+        return;
+      }
+
+      const submitBtn = document.getElementById('submit-btn');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Submitting...';
+
+      try {
+        await db.collection('reviews').add({
+          productName: productName,
+          reviewerName: reviewerName,
+          reviewText: reviewText,
+          rating: parseInt(ratingInput.value),
+          date: firebase.firestore.FieldValue.serverTimestamp()
+        });
+
+        document.getElementById('review-form').reset();
+        loadReviews(); // Reload reviews to show the new one
+      } catch (error) {
+        console.error('Error submitting review:', error);
+        alert('Failed to submit review. Please try again.');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit Review';
+      }
+    }
+
+    async function loadReviews() {
+      if (!productName) return;
+      try {
+        const querySnapshot = await db.collection('reviews').where('productName', '==', productName).orderBy('date', 'desc').get();
+        const reviews = querySnapshot.docs.map(doc => doc.data());
+        displayReviews(reviews);
+        updateAverageRating(reviews);
+      } catch (error) {
+        console.error('Error loading reviews:', error);
+        document.getElementById('reviews-list').innerHTML = '<div class="no-reviews">Could not load reviews.</div>';
+      }
+    }
+
+    function displayReviews(reviews) {
+      const container = document.getElementById('reviews-list');
+      if (reviews.length === 0) {
+        container.innerHTML = '<div class="no-reviews">No reviews yet. Be the first!</div>';
+        return;
+      }
+      container.innerHTML = reviews.map(review => {
+        const reviewDate = review.date ? new Date(review.date.toDate()).toLocaleDateString() : '';
+        const stars = '★'.repeat(review.rating) + '☆'.repeat(5 - review.rating);
+        return `
+          <div class="review-item">
+            <div class="review-header">
+              <div class="reviewer-info">
+                <div class="reviewer-avatar">${review.reviewerName.charAt(0)}</div>
+                <div>
+                  <div class="reviewer-name">${review.reviewerName}</div>
+                  <div class="review-date">${reviewDate}</div>
+                </div>
+              </div>
+              <div class="review-stars">${stars}</div>
+            </div>
+            <p class="review-text">${review.reviewText}</p>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function updateAverageRating(reviews) {
+      const container = document.querySelector('.average-rating');
+      if (reviews.length === 0) {
+        container.querySelector('.rating-text').textContent = 'No reviews yet';
+        container.querySelector('.stars').innerHTML = '☆'.repeat(5);
+        return;
+      }
+      const avg = reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length;
+      container.querySelector('.stars').innerHTML = '★'.repeat(Math.round(avg)) + '☆'.repeat(5 - Math.round(avg));
+      container.querySelector('.rating-text').textContent = `${avg.toFixed(1)} out of 5 (${reviews.length} reviews)`;
+    }
+    
+    function closeModal() {
+      document.getElementById('photo-modal').style.display = 'none';
+    }
+  </script>
+</body>
+</html>

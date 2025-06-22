@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset Stock Data - Beaded Bliss</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        button {
+            background: #dc2626;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 0;
+        }
+        button:hover {
+            background: #b91c1c;
+        }
+        .success {
+            color: #059669;
+            background: #d1fae5;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        .info {
+            background: #dbeafe;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔄 Reset Stock Data</h1>
+        <p>This will reset your stock data and include the new products you added.</p>
+        
+        <div class="info">
+            <strong>What this does:</strong>
+            <ul>
+                <li>Clears existing stock data from your browser</li>
+                <li>Adds the 4 new bracelet products to the system</li>
+                <li>Sets all new products to "In Stock" with default quantities</li>
+            </ul>
+        </div>
+        
+        <button onclick="resetStockData()">Reset Stock Data</button>
+        
+        <div id="result"></div>
+        
+        <p><a href="admin.html">← Back to Admin Panel</a></p>
+    </div>
+
+    <script>
+        function resetStockData() {
+            // Clear existing stock data
+            localStorage.removeItem('productStockData');
+            
+            // Create new stock data with all products including the new ones
+            const newStockData = [
+                // Bracelets Category
+                { id: 'ocean-bloom', name: 'Ocean Bloom', category: 'Bracelets', price: 50, image: '/photos/flower.jpg', inStock: true, stockQuantity: 5 },
+                { id: 'sunset-pearl', name: 'Sunset Pearl', category: 'Bracelets', price: 50, image: '/photos/orange.png', inStock: true, stockQuantity: 3 },
+                { id: 'moonlight-charm', name: 'Moonlight Charm', category: 'Bracelets', price: 50, image: '/photos/star.png', inStock: true, stockQuantity: 4 },
+                { id: 'floral-grace', name: 'Floral Grace', category: 'Bracelets', price: 50, image: '/photos/jasmine.png', inStock: false, stockQuantity: 0 },
+                { id: 'midnight-shine', name: 'Midnight Shine', category: 'Bracelets', price: 50, image: '/photos/black1.jpg', inStock: true, stockQuantity: 2 },
+                { id: 'azure-dream', name: 'Azure Dream', category: 'Bracelets', price: 50, image: '/photos/blue.png', inStock: true, stockQuantity: 6 },
+                { id: 'twilight-drops', name: 'Twilight Drops', category: 'Bracelets', price: 50, image: '/photos/stars.png', inStock: true, stockQuantity: 3 },
+                { id: 'lime-bloom', name: 'Lime Bloom', category: 'Bracelets', price: 50, image: '/photos/Bloom.png', inStock: true, stockQuantity: 4 },
+                // New Bracelet Products
+                { id: 'blush-wings', name: 'Blush Wings', category: 'Bracelets', price: 50, image: '/photos/flies.png', inStock: true, stockQuantity: 5 },
+                { id: 'heart-bloom', name: 'Heart Bloom', category: 'Bracelets', price: 50, image: '/photos/fly.png', inStock: true, stockQuantity: 4 },
+                { id: 'dots-edition', name: 'DOTS Edition', category: 'Bracelets', price: 50, image: '/photos/dots.png', inStock: true, stockQuantity: 3 },
+                { id: 'queen-edition', name: 'QUEEN Edition', category: 'Bracelets', price: 50, image: '/photos/dots.png', inStock: true, stockQuantity: 2 },
+                // Crochet Category (Knot & Carry)
+                { id: 'olive-bloom', name: 'Olive Bloom', category: 'Crochet', price: 499, image: '/photos/green bag.png', inStock: true, stockQuantity: 3 },
+                { id: 'cherry-ember', name: 'Cherry Ember', category: 'Crochet', price: 499, image: '/photos/red bag.png', inStock: true, stockQuantity: 2 },
+                // Clay Category (ClayClicks)
+                { id: 'avobuds', name: 'AvoBuds', category: 'Clay', price: 349, image: '/photos/avacado.webp', inStock: true, stockQuantity: 4 }
+            ];
+            
+            // Save the new stock data
+            localStorage.setItem('productStockData', JSON.stringify(newStockData));
+            
+            // Show success message
+            document.getElementById('result').innerHTML = `
+                <div class="success">
+                    <strong>✅ Stock data reset successfully!</strong><br>
+                    All products including the 4 new bracelets are now in the system.<br>
+                    <br>
+                    <strong>New products added:</strong>
+                    <ul>
+                        <li>Blush Wings (5 in stock)</li>
+                        <li>Heart Bloom (4 in stock)</li>
+                        <li>DOTS Edition (3 in stock)</li>
+                        <li>QUEEN Edition (2 in stock)</li>
+                    </ul>
+                    <br>
+                    <a href="admin.html">Go to Admin Panel</a> to manage stock levels.
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html> 

@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout | Beaded Bliss</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <meta name="description" content="Complete your purchase securely with our checkout process. We accept all major payment methods." />
+  <style>
+    .container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 var(--space-lg);
+    }
+    
+    .checkout-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xl);
+    }
+    
+    .checkout-form, .order-summary {
+      flex: 1;
+      min-width: 300px;
+      background: var(--background-primary);
+      padding: var(--space-xl);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-lg);
+    }
+    
+    h1, h2, h3 {
+      color: var(--text-primary);
+    }
+    
+    .page-title h1 {
+      text-align: center;
+      margin-bottom: var(--space-xl);
+      color: var(--primary-color);
+      font-size: 2.5rem;
+      font-weight: 800;
+    }
+    
+    .form-group {
+      margin-bottom: var(--space-lg);
+    }
+    
+    label {
+      display: block;
+      margin-bottom: var(--space-sm);
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    
+    input, textarea, select {
+      width: 100%;
+      padding: var(--space-md);
+      border: 2px solid var(--background-accent);
+      border-radius: var(--radius-md);
+      font-size: 1rem;
+      transition: var(--transition-fast);
+      font-family: inherit;
+    }
+    
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+    }
+    
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+    
+    .product-item {
+      display: flex;
+      justify-content: space-between;
+      padding: var(--space-md) 0;
+      border-bottom: 1px solid var(--background-accent);
+    }
+    
+    .total {
+      font-size: 1.25rem;
+      font-weight: bold;
+      margin-top: var(--space-lg);
+      padding-top: var(--space-lg);
+      border-top: 2px solid var(--background-accent);
+      display: flex;
+      justify-content: space-between;
+      color: var(--primary-color);
+    }
+    
+    .confirmation {
+      text-align: center;
+      padding: var(--space-3xl);
+      background: var(--background-primary);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-lg);
+      max-width: 600px;
+      margin: var(--space-xl) auto;
+    }
+    
+    .confirmation i {
+      font-size: 4rem;
+      color: var(--success);
+      margin-bottom: var(--space-lg);
+    }
+    
+    .error-message {
+      color: var(--error);
+      text-align: center;
+      margin: var(--space-md) 0;
+      font-weight: bold;
+      padding: var(--space-md);
+      background: rgba(239, 68, 68, 0.1);
+      border-radius: var(--radius-md);
+    }
+    
+    .hidden {
+      display: none;
+    }
+    
+    @media (max-width: 768px) {
+      .checkout-container {
+        flex-direction: column;
+      }
+      
+      .page-title h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>✨ Beaded Bliss ✨</h1>
+    <p>Handcrafted with Love, Worn with Pride</p>
+  </header>
+
+  <nav>
+    <div class="nav-links">
+      <a href="index.html">🏠 Home</a>
+      <a href="bracelets.html">💫 Wrist Whimsy</a>
+      <a href="crochet.html">👜 Knot & Carry</a>
+      <a href="clay.html">🎨 ClayClicks</a>
+      <a href="contact.html">📞 Contact</a>
+    </div>
+    <a href="cart.html" class="cart-icon">
+      <img src="/photos/car.png" alt="Cart">
+      <span class="cart-count" id="cart-count">0</span>
+    </a>
+  </nav>
+
+  <section class="page-title">
+    <h1>💳 Secure Checkout</h1>
+  </section>
+
+  <div class="container">
+    <div id="checkout-form-section">
+      <div class="checkout-container">
+        <div class="checkout-form">
+          <h2>📦 Shipping Information</h2>
+          <form id="shipping-form">
+            <div class="form-group">
+              <label for="name">Full Name</label>
+              <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" name="phone" required>
+            </div>
+            <div class="form-group">
+              <label for="address">Street Address</label>
+              <input type="text" id="address" name="address" required>
+            </div>
+            <div class="form-group">
+              <label for="city">City</label>
+              <input type="text" id="city" name="city" required>
+            </div>
+            <div class="form-group">
+              <label for="state">State</label>
+              <input type="text" id="state" name="state" required>
+            </div>
+            <div class="form-group">
+              <label for="zip">ZIP Code</label>
+              <input type="text" id="zip" name="zip" required>
+            </div>
+            <div class="form-group">
+              <label for="instructions">Delivery Instructions (Optional)</label>
+              <textarea id="instructions" name="instructions"></textarea>
+            </div>
+          </form>
+        </div>
+        
+        <div class="order-summary">
+          <h2>📋 Order Summary</h2>
+          <div id="items"></div>
+          <div class="total">
+            <span>Total:</span>
+            <span id="total-amount"></span>
+          </div>
+          <div id="error-message" class="error-message hidden"></div>
+          <button id="pay-button" class="btn">Proceed to Payment</button>
+        </div>
+      </div>
+    </div>
+    
+    <div id="confirmation-section" class="hidden">
+      <div class="confirmation">
+        <i class="fas fa-check-circle"></i>
+        <h2>Order Confirmed!</h2>
+        <p>Thank you for your purchase.</p>
+        <p>Order ID: <span id="order-id"></span></p>
+        <a href="index.html" class="btn">Back to Home</a>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Beaded Bliss | Handcrafted with ❤️ </p>
+  </footer>
+
+  <!-- Scripts must be in the correct order to work -->
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
+  <script src="stock-manager.js"></script>
+  
+  <script>
+    const firebaseConfig = {
+        apiKey: "AIzaSyAgHThw0E2q9iHTAwvRtV5ng0TpuXn5pT0",
+        authDomain: "handmadestorepayments-a815b.firebaseapp.com",
+        projectId: "handmadestorepayments-a815b",
+        storageBucket: "handmadestorepayments-a815b.appspot.com",
+        messagingSenderId: "415509892322",
+        appId: "1:415509892322:web:b23f2569a96ec27e2362bb"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    let itemsToPurchase = [];
+    let isBuyNow = false;
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const itemsContainer = document.getElementById('items');
+      const totalDisplay = document.getElementById('total-amount');
+      let total = 0;
+
+      if (urlParams.has('name')) {
+        isBuyNow = true;
+        const item = {
+          name: urlParams.get('name'),
+          price: parseFloat(urlParams.get('price')),
+          quantity: parseInt(urlParams.get('quantity')) || 1,
+          image: urlParams.get('img')
+        };
+        itemsToPurchase = [item];
+        const itemTotal = item.price * item.quantity;
+        total += itemTotal;
+        itemsContainer.innerHTML += `
+          <div class="product-item">
+            <span>${item.name} (x${item.quantity})</span>
+            <span>₹${itemTotal.toFixed(2)}</span>
+          </div>
+        `;
+      } else {
+        isBuyNow = false;
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        itemsToPurchase = cart;
+        if (cart.length === 0) {
+          itemsContainer.innerHTML = '<p>No items in your cart.</p>';
+        } else {
+          cart.forEach(item => {
+            const itemTotal = item.price * item.quantity;
+            total += itemTotal;
+            itemsContainer.innerHTML += `
+              <div class="product-item">
+                <span>${item.name} (x${item.quantity})</span>
+                <span>₹${itemTotal.toFixed(2)}</span>
+              </div>
+            `;
+          });
+        }
+      }
+
+      totalDisplay.textContent = `₹${total.toFixed(2)}`;
+      
+      document.getElementById('pay-button').addEventListener('click', function() {
+        const form = document.getElementById('shipping-form');
+        if (form.checkValidity()) {
+          processPayment(total);
+        } else {
+          form.reportValidity();
+        }
+      });
+    });
+
+    function processPayment(amount) {
+      const payButton = document.getElementById('pay-button');
+      
+      // --- STOCK CHECK ---
+      for (const item of itemsToPurchase) {
+        if (!checkStock(item.name, item.quantity)) {
+          alert(`Sorry, the item "${item.name}" is out of stock or you have requested more than are available.`);
+          return; // Stop the payment process
+        }
+      }
+
+      const options = {
+        "key": "rzp_test_MXEvwy733rss4I", // Your original test key
+        "amount": amount * 100,
+        "currency": "INR",
+        "name": "Beaded Bliss",
+        "description": "Purchase of handmade items",
+        "handler": function(response) {
+          saveOrderAndShowConfirmation(response.razorpay_payment_id, itemsToPurchase, amount);
+        },
+        "prefill": {
+          "name": document.getElementById('name').value,
+          "email": document.getElementById('email').value,
+          "contact": document.getElementById('phone').value
+        },
+        "modal": {
+          "ondismiss": function() {
+            resetPaymentState();
+
+            // Make sure billing form is visible and confirmation is hidden
+            document.getElementById('checkout-form-section').classList.remove('hidden');
+            document.getElementById('confirmation-section').classList.add('hidden');
+
+            // Scroll to top of form smoothly
+            document.getElementById('checkout-form-section').scrollIntoView({ behavior: 'smooth' });
+
+            alert("Payment was cancelled. You can continue with your order.");
+          }
+        },
+        "theme": {
+          "color": "#8B5CF6"
+        }
+      };
+      
+        const rzp = new Razorpay(options);
+        rzp.on('payment.failed', function(response) {
+        alert("Payment failed: " + response.error.description);
+        payButton.disabled = false;
+        payButton.textContent = 'Proceed to Payment';
+      });
+
+      payButton.disabled = true;
+      payButton.textContent = 'Processing...';
+      rzp.open();
+      }
+    
+    async function saveOrderAndShowConfirmation(paymentId, purchasedItems, totalAmount) {
+      const customerData = {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        address: {
+          street: document.getElementById('address').value,
+          city: document.getElementById('city').value,
+          state: document.getElementById('state').value,
+          zip: document.getElementById('zip').value
+        },
+        instructions: document.getElementById('instructions').value,
+      };
+
+      try {
+        await db.collection("orders").add({
+          paymentId: paymentId,
+          customer: customerData,
+          items: purchasedItems,
+          amount: totalAmount,
+          status: "Paid",
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        
+        // --- STOCK UPDATE ---
+        purchasedItems.forEach(item => {
+          decreaseStock(item.name, item.quantity);
+        });
+        
+        document.getElementById('checkout-form-section').classList.add('hidden');
+        document.getElementById('confirmation-section').classList.remove('hidden');
+        document.getElementById('order-id').textContent = paymentId;
+        
+        if (!isBuyNow) {
+        localStorage.removeItem('cart');
+        }
+      } catch (error) {
+        console.error("Error saving order:", error);
+        alert("Payment was successful but we couldn't save your order details. Please contact us with your payment ID: " + paymentId);
+        // Still show confirmation even if Firebase fails, as the payment went through
+        document.getElementById('checkout-form-section').classList.add('hidden');
+        document.getElementById('confirmation-section').classList.remove('hidden');
+        document.getElementById('order-id').textContent = paymentId;
+      }
+    }
+
+    /**
+     * Updates the cart item count in the header navigation.
+     */
+    function updateNavCartCount() {
+        const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+        const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+        document.getElementById('cart-count').textContent = totalItems;
+    }
+  </script>
+
+</body>
+</html>

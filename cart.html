@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Your Cart | Beaded Bliss</title>
+  <link rel="stylesheet" href="style.css" />
+  <meta name="description" content="Review your cart and proceed to checkout with your handmade jewelry selections." />
+  <style>
+    .cart-container {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 20px;
+    }
+
+    .cart-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      background: var(--background-primary);
+      border-radius: var(--radius-lg);
+      padding: var(--space-lg);
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition-fast);
+    }
+
+    .cart-item:hover {
+      box-shadow: var(--shadow-md);
+    }
+
+    .cart-item img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: var(--radius-md);
+      margin-right: 15px;
+    }
+
+    .item-info {
+      flex: 2;
+      display: flex;
+      align-items: center;
+    }
+
+    .item-details {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+
+    .item-details h3 {
+      margin: 0;
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .item-details p {
+      margin: 0;
+      color: var(--text-secondary);
+    }
+
+    .quantity-control {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: var(--space-sm) 0;
+    }
+
+    .quantity-btn {
+      background: var(--background-accent);
+      border: none;
+      padding: 8px 12px;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: var(--radius-sm);
+      transition: var(--transition-fast);
+    }
+
+    .quantity-btn:hover {
+      background: var(--primary-color);
+      color: white;
+    }
+
+    .remove-btn {
+      background: transparent;
+      color: var(--error);
+      border: 1px solid var(--error);
+      cursor: pointer;
+      font-weight: 500;
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: var(--radius-sm);
+      transition: var(--transition-fast);
+    }
+
+    .remove-btn:hover {
+      background: var(--error);
+      color: white;
+    }
+
+    .total {
+      text-align: right;
+      font-size: 1.25rem;
+      margin-top: var(--space-xl);
+      padding: var(--space-lg);
+      background: var(--background-primary);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .empty-cart {
+      text-align: center;
+      padding: var(--space-3xl);
+      color: var(--text-secondary);
+    }
+
+    .empty-cart h2 {
+      color: var(--text-primary);
+      margin-bottom: var(--space-md);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>✨ Beaded Bliss ✨</h1>
+    <p>Handcrafted with Love, Worn with Pride</p>
+  </header>
+
+  <nav>
+    <div class="nav-links">
+      <a href="index.html">🏠 Home</a>
+      <a href="bracelets.html">💫 Wrist Whimsy</a>
+      <a href="crochet.html">👜 Knot & Carry</a>
+      <a href="clay.html">🎨 ClayClicks</a>
+      <a href="contact.html">📞 Contact</a>
+    </div>
+    <a href="cart.html" class="cart-icon">
+      <img src="photos/car.png" alt="Cart">
+      <span class="cart-count" id="cart-count">0</span>
+    </a>
+  </nav>
+
+  <section class="page-title">
+    <h1>🛒 Your Cart</h1>
+  </section>
+
+  <div class="cart-container" id="cart"></div>
+  
+  <footer>
+    <p>&copy; 2025 Beaded Bliss | Handcrafted with ❤️</p>
+  </footer>
+
+  <script>
+    const cartContainer = document.getElementById('cart');
+    let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+
+    function updateCartCount() {
+      const count = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+      document.getElementById('cart-count').textContent = count;
+    }
+
+    function renderCart() {
+      updateCartCount();
+      if (cartItems.length === 0) {
+        cartContainer.innerHTML = `
+          <div class="empty-cart">
+            <h2>🛍️ Your cart is empty</h2>
+            <p>Looks like you haven't added any items yet.</p>
+            <a href="index.html" class="btn">Continue Shopping</a>
+          </div>
+        `;
+        return;
+      }
+
+      let total = 0;
+      cartContainer.innerHTML = '';
+
+      cartItems.forEach((item, index) => {
+        const itemTotal = item.price * item.quantity;
+        total += itemTotal;
+
+        const itemElement = document.createElement('div');
+        itemElement.className = 'cart-item';
+        itemElement.innerHTML = `
+          <div class="item-info">
+           <img src="photos/${item.image}" alt="${item.name}">
+
+            <div class="item-details">
+              <h3>${item.name}</h3>
+              <p>Price: ₹${item.price}</p>
+              <div class="quantity-control">
+                <button class="quantity-btn" onclick="changeQty(${index}, -1)">−</button>
+                <span>${item.quantity}</span>
+                <button class="quantity-btn" onclick="changeQty(${index}, 1)">+</button>
+              </div>
+              <p>Item Total: ₹${itemTotal}</p>
+              <button class="remove-btn" onclick="removeItem(${index})">Remove</button>
+            </div>
+          </div>
+        `;
+        cartContainer.appendChild(itemElement);
+      });
+
+      const totalElement = document.createElement('div');
+      totalElement.className = 'total';
+      totalElement.innerHTML = `
+        <strong>Total: ₹${total}</strong><br>
+        <a href="payment.html" class="btn">Proceed to Payment</a>
+        <button class="btn" onclick="clearCart()">Empty Cart</button>
+      `;
+      cartContainer.appendChild(totalElement);
+    }
+
+    function changeQty(index, delta) {
+      const newQty = cartItems[index].quantity + delta;
+      if (newQty <= 0) return removeItem(index);
+      cartItems[index].quantity = newQty;
+      localStorage.setItem('cart', JSON.stringify(cartItems));
+      renderCart();
+    }
+
+    function removeItem(index) {
+      cartItems.splice(index, 1);
+      localStorage.setItem('cart', JSON.stringify(cartItems));
+      renderCart();
+    }
+
+    function clearCart() {
+      if (confirm("Are you sure you want to empty the cart?")) {
+        cartItems = [];
+        localStorage.removeItem('cart');
+        renderCart();
+      }
+    }
+
+    renderCart();
+  </script>
+</body>
+</html>

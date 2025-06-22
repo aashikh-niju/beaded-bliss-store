@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Knot & Carry - Handmade Crochet Bags | Beaded Bliss</title>
+  <link rel="stylesheet" href="style.css">
+  <meta name="description" content="Discover our collection of handmade crochet bags. Each bag is uniquely crafted with love and attention to detail." />
+</head>
+<body>
+  <header>
+    <h1>✨ Beaded Bliss ✨</h1>
+    <p>Handcrafted with Love, Worn with Pride</p>
+  </header>
+
+  <nav>
+    <div class="nav-links">
+      <a href="index.html">🏠 Home</a>
+      <a href="bracelets.html">💫 Wrist Whimsy</a>
+      <a href="crochet.html">👜 Knot & Carry</a>
+      <a href="clay.html">🎨 ClayClicks</a>
+      <a href="contact.html">📞 Contact</a>
+    </div>
+    <a href="cart.html" class="cart-icon">
+      <img src="/photos/car.png" alt="Cart">
+      <span class="cart-count" id="cart-count">0</span>
+    </a>
+  </nav>
+
+  <section class="page-title">
+    <h1>👜 Knot & Carry</h1>
+  </section>
+
+  <main class="container">
+    <div class="product" data-product-id="olive-bloom">
+      <a href="product.html?name=Olive+Bloom&img=green%20bag.png">
+        <img src="/photos/green bag.png" alt="Olive Bloom - Handmade Crochet Bag">
+        <h3>Olive Bloom</h3>
+        <p class="price">₹499</p>
+      </a>
+    </div>
+    
+    <div class="product" data-product-id="cherry-ember">
+      <a href="product.html?name=Cherry+Ember&img=red%20bag.png">
+        <img src="/photos/red bag.png" alt="Cherry Ember - Handmade Crochet Bag">
+        <h3>Cherry Ember</h3>
+        <p class="price">₹499</p>
+      </a>
+    </div>
+    
+    <!-- Add more crochet items here -->
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Beaded Bliss | Handcrafted with ❤️ </p>
+  </footer>
+
+  <!-- Stock Manager Script -->
+  <script src="stock-manager.js"></script>
+
+  <!-- JavaScript for updating cart count and stock status -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const cartCount = document.getElementById('cart-count');
+      const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+      const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+      cartCount.textContent = totalItems;
+
+      // Load prices and update product display
+      loadProductPrices();
+      // Update stock status for all products
+      updateProductStockStatus();
+    });
+
+    function loadProductPrices() {
+      const savedStockData = localStorage.getItem('productStockData');
+      if (!savedStockData) return;
+
+      const products = JSON.parse(savedStockData);
+      const productMap = new Map(products.map(p => [p.id, p]));
+
+      // Update each product on the page
+      document.querySelectorAll('.product').forEach(productElement => {
+        const productId = productElement.getAttribute('data-product-id');
+        const product = productMap.get(productId);
+        
+        if (product) {
+          const priceElement = productElement.querySelector('.price');
+          const link = productElement.querySelector('a');
+          
+          // Update price display
+          priceElement.textContent = `₹${product.price}`;
+          
+          // Update URL with current price
+          const currentHref = link.getAttribute('href');
+          const baseUrl = currentHref.split('?')[0];
+          const params = new URLSearchParams(currentHref.split('?')[1]);
+          params.set('price', product.price);
+          link.setAttribute('href', `${baseUrl}?${params.toString()}`);
+        }
+      });
+    }
+
+    function updateProductStockStatus() {
+      const products = document.querySelectorAll('.product');
+      
+      products.forEach(product => {
+        const productName = product.querySelector('h3').textContent;
+        const priceElement = product.querySelector('.price');
+        const isInStock = checkStock(productName);
+        const stockQuantity = getStockQuantity(productName);
+        
+        if (!isInStock) {
+          // Add out of stock overlay
+          const overlay = document.createElement('div');
+          overlay.className = 'out-of-stock-overlay';
+          overlay.innerHTML = '<span>Out of Stock</span>';
+          product.appendChild(overlay);
+          
+          // Update price to show out of stock
+          priceElement.innerHTML = '<span style="color: #dc2626; font-weight: bold;">Out of Stock</span>';
+          
+          // Disable the link
+          const link = product.querySelector('a');
+          link.style.pointerEvents = 'none';
+          link.style.opacity = '0.6';
+        } else if (stockQuantity <= 3) {
+          // Show low stock warning
+          const currentPrice = priceElement.textContent;
+          priceElement.innerHTML = `${currentPrice} <span style="color: #f59e0b; font-size: 0.8rem;">(Only ${stockQuantity} left!)</span>`;
+        }
+      });
+    }
+  </script>
+</body>
+</html>
